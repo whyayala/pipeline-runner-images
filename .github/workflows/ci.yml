@@ -28,6 +28,8 @@ jobs:
           tags: ${{ env.IMAGE_TAGS }}
           containerfiles: |
             ./Containerfile
+            build-args: |
+            target=base
 
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
