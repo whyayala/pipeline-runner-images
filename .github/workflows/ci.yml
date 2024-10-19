@@ -21,7 +21,7 @@ jobs:
         id: build
         uses: redhat-actions/buildah-build@v2
         with:
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_TAGS }}
           containerfiles: |
