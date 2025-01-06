@@ -17,9 +17,7 @@ RUN set -x \
       \
       && echo -e "\e[93m==> Installing awscli...\e[39m" \
       && pip3 install --no-cache-dir awscli \
-      \
-      && echo -e "\e[93m==> Installing boto3...\e[39m" \
-      && pip3 install --no-cache-dir --user boto3
+      && dnf clean all
 
 FROM buildah AS buildah-rootless
 
@@ -33,7 +31,9 @@ RUN echo "export BUILDAH_ISOLATION=chroot" >> /home/build/.bashrc
 
 # Use VFS since fuse does not work
 RUN mkdir -p /home/build/.config/containers \
-&& (echo '[storage]';echo 'driver = "vfs"') > /home/build/.config/containers/storage.conf
+&& (echo '[storage]';echo 'driver = "vfs"') > /home/build/.config/containers/storage.conf \
+&& (echo 'runroot = "/home/build/.buildah-cache/runroot"') >> /home/build/.config/containers/storage.conf \
+&& (echo 'graphroot = "/home/build/.buildah-cache/graphroot"') >> /home/build/.config/containers/storage.conf
 
 # The buildah container will run as `build` user
 USER build
