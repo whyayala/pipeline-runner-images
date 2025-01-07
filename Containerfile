@@ -32,8 +32,8 @@ RUN echo "export BUILDAH_ISOLATION=chroot" >> /home/build/.bashrc
 # Use VFS since fuse does not work
 RUN mkdir -p /home/build/.config/containers \
 && (echo '[storage]';echo 'driver = "vfs"') > /home/build/.config/containers/storage.conf \
-&& (echo 'runroot = "/home/build/.buildah-cache/runroot"') >> /home/build/.config/containers/storage.conf \
-&& (echo 'graphroot = "/home/build/.buildah-cache/graphroot"') >> /home/build/.config/containers/storage.conf
+&& (echo 'runroot = "/tmp/containers-user-$(id -u)"') >> /home/build/.config/containers/storage.conf \
+&& (echo 'graphroot = "/builds/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/.buildah"') >> /home/build/.config/containers/storage.conf
 
 # The buildah container will run as `build` user
 USER build
