@@ -5,11 +5,6 @@ LABEL description="A simple docker image for gitlab runner use"
 
 RUN set -x \
       && echo -e "\e[93m==> Adding runtime dependencies...\e[39m" \
-      && dnf -y update krb5-libs \
-              python3-libs \
-              python3 \
-              pam-libs \
-              pam \
       && dnf install --assumeyes make \
               zip \
               bash \
@@ -17,6 +12,11 @@ RUN set -x \
               python3-pip \
               groff \
       \
+      && dnf -y update krb5-libs \
+              python3-libs \
+              python3 \
+              pam-libs \
+              pam \
       && echo -e "\e[93m==> Udpating pip...\e[39m" \
       && pip3 install --upgrade --no-cache-dir pip \
       \
